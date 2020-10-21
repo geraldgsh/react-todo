@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import Modal from "./components/Modal";
-import axios from "axios";
+/* eslint-disable no-console */
+import React, { Component } from 'react';
+import axios from 'axios';
+import Modal from './components/Modal';
 
 class App extends Component {
   constructor(props) {
@@ -8,50 +9,87 @@ class App extends Component {
     this.state = {
       viewCompleted: false,
       activeItem: {
-        title: "",
-        description: "",
-        completed: false
+        title: '',
+        description: '',
+        completed: false,
       },
-      todoList: []
+      todoList: [],
     };
   }
+
   componentDidMount() {
     this.refreshList();
   }
-  refreshList = () => {
+
+  refreshList() {
     axios
-      .get("https://djangotodo-app.herokuapp.com/api/todos/")
+      .get('https://djangotodo-app.herokuapp.com/api/todos/')
       .then(res => this.setState({ todoList: res.data }))
       .catch(err => console.log(err));
-  };
-  displayCompleted = status => {
+  }
+
+  displayCompleted(status) {
     if (status) {
       return this.setState({ viewCompleted: true });
     }
     return this.setState({ viewCompleted: false });
-  };
-  renderTabList = () => {
+  }
+
+  toggle() {
+    this.setState({ modal: !this.state.modal });
+  }
+
+  handleSubmit(item) {
+    this.toggle();
+    if (item.id) {
+      axios
+        .put(`https://djangotodo-app.herokuapp.com/api/todos/${item.id}/`, item)
+        .then(res => this.refreshList());
+      return;
+    }
+    axios
+      .post('https://djangotodo-app.herokuapp.com/api/todos/', item)
+      .then(res => this.refreshList());
+  }
+
+  handleDelete(item) {
+    axios
+      .delete(`https://djangotodo-app.herokuapp.com/api/todos/${item.id}`)
+      .then(res => this.refreshList());
+  }
+
+  createItem() {
+    const item = { title: '', description: '', completed: false };
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  }
+
+  editItem(item) {
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  }
+
+  renderTabList() {
     return (
       <div className="my-5 tab-list">
         <span
           onClick={() => this.displayCompleted(true)}
-          className={this.state.viewCompleted ? "active" : ""}
+          className={this.state.viewCompleted ? 'active' : ''}
         >
           complete
         </span>
         <span
           onClick={() => this.displayCompleted(false)}
-          className={this.state.viewCompleted ? "" : "active"}
+          className={this.state.viewCompleted ? '' : 'active'}
         >
           Incomplete
         </span>
       </div>
     );
-  };
-  renderItems = () => {
+  }
+
+  renderItems() {
     const { viewCompleted } = this.state;
     const newItems = this.state.todoList.filter(
-      item => item.completed === viewCompleted
+      item => item.completed === viewCompleted,
     );
     return newItems.map(item => (
       <li
@@ -60,7 +98,7 @@ class App extends Component {
       >
         <span
           className={`todo-title mr-2 ${
-            this.state.viewCompleted ? "completed-todo" : ""
+            this.state.viewCompleted ? 'completed-todo' : ''
           }`}
           title={item.description}
         >
@@ -70,47 +108,25 @@ class App extends Component {
           <button
             onClick={() => this.editItem(item)}
             className="btn btn-secondary mr-2"
+            type="button"
           >
-            {" "}
-            Edit{" "}
+            {' '}
+            Edit
+            {' '}
           </button>
           <button
             onClick={() => this.handleDelete(item)}
             className="btn btn-danger"
+            type="button"
           >
-            Delete{" "}
+            Delete
+            {' '}
           </button>
         </span>
       </li>
     ));
-  };
-  toggle = () => {
-    this.setState({ modal: !this.state.modal });
-  };
-  handleSubmit = item => {
-    this.toggle();
-    if (item.id) {
-      axios
-        .put(`https://djangotodo-app.herokuapp.com/api/todos/${item.id}/`, item)
-        .then(res => this.refreshList());
-      return;
-    }
-    axios
-      .post("https://djangotodo-app.herokuapp.com/api/todos/", item)
-      .then(res => this.refreshList());
-  };
-  handleDelete = item => {
-    axios
-      .delete(`https://djangotodo-app.herokuapp.com/api/todos/${item.id}`)
-      .then(res => this.refreshList());
-  };
-  createItem = () => {
-    const item = { title: "", description: "", completed: false };
-    this.setState({ activeItem: item, modal: !this.state.modal });
-  };
-  editItem = item => {
-    this.setState({ activeItem: item, modal: !this.state.modal });
-  };
+  }
+
   render() {
     return (
       <main className="content">
@@ -119,7 +135,7 @@ class App extends Component {
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <div className="">
-                <button onClick={this.createItem} className="btn btn-primary">
+                <button onClick={this.createItem} className="btn btn-primary" type="button">
                   Add task
                 </button>
               </div>
