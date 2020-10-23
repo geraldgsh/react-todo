@@ -128,6 +128,8 @@ class App extends Component {
   }
 
   render() {
+    const { modal } = this.state;
+    const { activeItem } = this.state;
     return (
       <main className="content">
         <h1 className="text-white text-uppercase text-center my-4">Todo app</h1>
@@ -146,9 +148,9 @@ class App extends Component {
             </div>
           </div>
         </div>
-        {this.state.modal ? (
+        {modal ? (
           <Modal
-            activeItem={this.state.activeItem}
+            activeItem={activeItem}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />
