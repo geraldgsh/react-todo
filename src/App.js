@@ -98,7 +98,7 @@ class App extends Component {
       >
         <span
           className={`todo-title mr-2 ${
-            this.state.viewCompleted ? 'completed-todo' : ''
+            viewCompleted ? 'completed-todo' : ''
           }`}
           title={item.description}
         >
