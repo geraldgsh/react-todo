@@ -7,7 +7,7 @@ React and Django
 
 ### Introduction.
 
-A web application that retrieves from DJango backend, edit and add the user's todo list. 
+A web application that retrieves data from DJango backend, edit and add the user's todo list. 
 
 ### Tools
 
@@ -114,8 +114,8 @@ Make sure that you do not modify the [`.github/workflows/linters.yml`](.github/w
 
 ### Future Features
 
-1. Persistent storage of bookmarks with Firebase DB
-2. Feature to remove bookmarks
+1. 
+2. 
 
 ### To begin
 
@@ -133,7 +133,7 @@ Make sure that you do not modify the [`.github/workflows/linters.yml`](.github/w
 Checkout our [wikipage](https://github.com/geraldgsh/react-todo/wiki) for more details. 
 
 #### Live Demo
-[Demo](https://react-todo.netlify.com)
+[Demo](https://react-todoapplet.netlify.app/)
 
 #### Getting Started
 Clone repo and open index.html with your favorite browser.
