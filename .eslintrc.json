@@ -22,5 +22,6 @@
   "ignorePatterns": [
     "dist/",
     "build/"
-  ]
+  ],
+  "funct-style": ["error", "declaration", { "allowArrowFunctions": true }] 
 }

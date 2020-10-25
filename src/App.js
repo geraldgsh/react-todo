@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { Component } from 'react';
 import axios from 'axios';
 import Modal from './components/Modal';
@@ -9,8 +8,8 @@ class App extends Component {
     this.state = {
       viewCompleted: false,
       activeItem: {
-        title: '',
-        description: '',
+        title: "",
+        description: "",
         completed: false,
       },
       todoList: [],
@@ -21,25 +20,25 @@ class App extends Component {
     this.refreshList();
   }
 
-  refreshList() {
+  refreshList = () => {
     axios
-      .get('https://djangotodo-app.herokuapp.com/api/todos/')
+      .get("https://djangotodo-app.herokuapp.com/api/todos/")
       .then(res => this.setState({ todoList: res.data }))
       .catch(err => console.log(err));
   }
 
-  displayCompleted(status) {
+  displayCompleted = status => {
     if (status) {
       return this.setState({ viewCompleted: true });
     }
     return this.setState({ viewCompleted: false });
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({ modal: !this.state.modal });
   }
 
-  handleSubmit(item) {
+  handleSubmit = item => {
     this.toggle();
     if (item.id) {
       axios
@@ -48,47 +47,29 @@ class App extends Component {
       return;
     }
     axios
-      .post('https://djangotodo-app.herokuapp.com/api/todos/', item)
+      .post("https://djangotodo-app.herokuapp.com/api/todos/", item)
       .then(res => this.refreshList());
   }
 
-  handleDelete(item) {
+  handleDelete = item => {
     axios
       .delete(`https://djangotodo-app.herokuapp.com/api/todos/${item.id}`)
       .then(res => this.refreshList());
   }
 
-  createItem() {
-    const item = { title: '', description: '', completed: false };
+  createItem = () => {
+    const item = { title: "", description: "", completed: false };
     this.setState({ activeItem: item, modal: !this.state.modal });
   }
 
-  editItem(item) {
+  editItem = item => {
     this.setState({ activeItem: item, modal: !this.state.modal });
   }
 
-  renderTabList() {
-    return (
-      <div className="my-5 tab-list">
-        <span
-          onClick={() => this.displayCompleted(true)}
-          className={this.state.viewCompleted ? 'active' : ''}
-        >
-          complete
-        </span>
-        <span
-          onClick={() => this.displayCompleted(false)}
-          className={this.state.viewCompleted ? '' : 'active'}
-        >
-          Incomplete
-        </span>
-      </div>
-    );
-  }
-
-  renderItems() {
+  renderItems = () => {
     const { viewCompleted } = this.state;
-    const newItems = this.state.todoList.filter(
+    const { todoList } = this.state;
+    const newItems = todoList.filter(
       item => item.completed === viewCompleted,
     );
     return newItems.map(item => (
@@ -106,18 +87,18 @@ class App extends Component {
         </span>
         <span>
           <button
+            type="button"
             onClick={() => this.editItem(item)}
             className="btn btn-secondary mr-2"
-            type="button"
           >
             {' '}
             Edit
             {' '}
           </button>
           <button
+            type="button"
             onClick={() => this.handleDelete(item)}
             className="btn btn-danger"
-            type="button"
           >
             Delete
             {' '}
@@ -125,6 +106,32 @@ class App extends Component {
         </span>
       </li>
     ));
+  }
+
+  renderTabList() {
+    const { viewCompleted } = this.state;
+    return (
+      <div className="my-5 tab-list">
+        <span
+          role="button"
+          tabIndex="0"
+          onKeyUp={this.handleKeyUp}
+          onClick={() => this.displayCompleted(true)}
+          className={viewCompleted ? 'active' : ''}
+        >
+          complete
+        </span>
+        <span
+          role="button"
+          tabIndex="0"
+          onKeyDown={this.handleKeyDown}
+          onClick={() => this.displayCompleted(false)}
+          className={viewCompleted ? '' : 'active'}
+        >
+          Incomplete
+        </span>
+      </div>
+    );
   }
 
   render() {
@@ -137,7 +144,7 @@ class App extends Component {
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <div className="">
-                <button onClick={this.createItem} className="btn btn-primary" type="button">
+                <button onClick={this.createItem} type="button" className="btn btn-primary">
                   Add task
                 </button>
               </div>
