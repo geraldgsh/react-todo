@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Button,
   Modal,
@@ -8,8 +8,8 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
-} from "reactstrap";
+  Label,
+} from 'reactstrap';
 
 export default class CustomModal extends Component {
   constructor(props) {
@@ -18,14 +18,16 @@ export default class CustomModal extends Component {
       activeItem: this.props.activeItem
     };
   }
-  handleChange = e => {
-    let { name, value } = e.target;
-    if (e.target.type === "checkbox") {
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    if (e.target.type === 'checkbox') {
       value = e.target.checked;
     }
     const activeItem = { ...this.state.activeItem, [name]: value };
     this.setState({ activeItem });
-  };
+  }
+
   render() {
     const { toggle, onSave } = this.props;
     return (
