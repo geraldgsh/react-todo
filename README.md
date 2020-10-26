@@ -7,7 +7,7 @@ React and Django
 
 ### Introduction.
 
-A web application that retrieves data from DJango backend, edit and add the user's todo list. 
+A single web application that retrieves data from DJango backend, edit and add the user's todo list. 
 
 ### Tools
 

@@ -8,8 +8,8 @@ class App extends Component {
     this.state = {
       viewCompleted: false,
       activeItem: {
-        title: "",
-        description: "",
+        title: '',
+        description: '',
         completed: false,
       },
       todoList: [],
@@ -58,7 +58,7 @@ class App extends Component {
   }
 
   createItem = () => {
-    const item = { title: "", description: "", completed: false };
+    const item = { title: '', description: '', completed: false };
     this.setState({ activeItem: item, modal: !this.state.modal });
   }
 
