@@ -23,6 +23,6 @@
     "dist/",
     "build/"
   ],
-  // "funct-style": ["error", "declaration", { "allowArrowFunctions": true }],
-  // "no-const-assign": "error"
+  "funct-style": ["error", "declaration", { "allowArrowFunctions": true }],
+  "no-const-assign": "error"
 }
